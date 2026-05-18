@@ -1,15 +1,512 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="index.css">
-    <meta name="theme-color" content="#000000" />
-    <meta
-      name="description"
-      content="Web site created using create-react-app"/>
-   <h1>This is a React JS website with components</h1>
-    <p>Hi! Welcome to the page!</p>
-  </body>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Canvas | Buttons, Pictures & Text</title>
+  <!-- Google Fonts & simple reset for a clean, modern look -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: linear-gradient(145deg, #f6f9fc 0%, #eef2f5 100%);
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+      color: #1a2c3e;
+      line-height: 1.4;
+      padding: 2rem 1.5rem;
+    }
+
+    .container {
+      max-width: 1300px;
+      margin: 0 auto;
+    }
+
+    /* header / hero section */
+    .hero {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .hero h1 {
+      font-size: 3rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #1f4e6e, #2c7a5e);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      color: #2c5368;
+      max-width: 620px;
+      margin: 0 auto;
+      font-weight: 400;
+    }
+
+    /* cards grid – pictures, text & buttons together */
+    .cards-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      justify-content: center;
+      margin-bottom: 3rem;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(0px);
+      background: #ffffff;
+      border-radius: 2rem;
+      box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.02);
+      width: 300px;
+      overflow: hidden;
+      transition: transform 0.25s ease, box-shadow 0.3s ease;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 28px 40px -16px rgba(0, 20, 30, 0.2);
+    }
+
+    .card-img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      display: block;
+      border-bottom: 1px solid #e9edf2;
+    }
+
+    .card-content {
+      padding: 1.5rem 1.3rem 1.8rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 0.6rem;
+      color: #1f3b4a;
+    }
+
+    .card-desc {
+      font-size: 0.95rem;
+      line-height: 1.45;
+      color: #2c4a5e;
+      margin-bottom: 1.5rem;
+      flex: 1;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      background: #1f5e6e;
+      color: white;
+      font-weight: 600;
+      font-size: 0.9rem;
+      padding: 0.7rem 1.2rem;
+      border: none;
+      border-radius: 2.5rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-decoration: none;
+      width: fit-content;
+      font-family: inherit;
+      letter-spacing: 0.3px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 1.5px solid #1f5e6e;
+      color: #1f5e6e;
+      box-shadow: none;
+    }
+
+    .btn-outline:hover {
+      background: #1f5e6e10;
+      border-color: #154956;
+      color: #154956;
+      transform: scale(0.97);
+    }
+
+    .btn-primary {
+      background: #2c7a5e;
+      box-shadow: 0 6px 14px rgba(44, 122, 94, 0.25);
+    }
+
+    .btn-primary:hover {
+      background: #236b51;
+      transform: translateY(-2px);
+      box-shadow: 0 10px 18px rgba(35, 107, 81, 0.3);
+    }
+
+    .btn-warning {
+      background: #d9734c;
+    }
+
+    .btn-warning:hover {
+      background: #c25f3b;
+      transform: translateY(-2px);
+    }
+
+    /* button group example row (inline demo) */
+    .action-row {
+      background: rgba(255,255,240,0.6);
+      border-radius: 2rem;
+      padding: 2rem 1.8rem;
+      margin: 2rem 0 3rem;
+      text-align: center;
+      backdrop-filter: blur(2px);
+      background: #ffffffcc;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.02), 0 1px 2px #e2e8f0;
+      border: 1px solid #eef2f8;
+    }
+
+    .action-row h3 {
+      font-size: 1.7rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: #1d4e5c;
+    }
+
+    .button-group {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1.2rem;
+      margin-top: 1rem;
+    }
+
+    /* interactive feedback */
+    .toast-msg {
+      margin-top: 1.5rem;
+      font-size: 0.9rem;
+      background: #1f2e36e0;
+      backdrop-filter: blur(8px);
+      color: white;
+      padding: 0.6rem 1.2rem;
+      border-radius: 60px;
+      display: inline-block;
+      transition: opacity 0.2s;
+      font-weight: 500;
+    }
+
+    /* decorative picture banner (extra visual) */
+    .inspire-banner {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      background: #e4f0ea;
+      border-radius: 2rem;
+      padding: 1.5rem 2rem;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 2rem;
+    }
+
+    .banner-text {
+      flex: 2;
+    }
+
+    .banner-text h4 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #235b48;
+    }
+
+    .banner-text p {
+      color: #2a5f6b;
+    }
+
+    .banner-img {
+      width: 80px;
+      height: 80px;
+      object-fit: cover;
+      border-radius: 2rem;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 3rem;
+      font-size: 0.8rem;
+      color: #5c7382;
+      border-top: 1px solid #dce5ec;
+      padding-top: 2rem;
+    }
+
+    @media (max-width: 680px) {
+      body {
+        padding: 1.2rem;
+      }
+      .hero h1 {
+        font-size: 2.2rem;
+      }
+      .card {
+        width: 280px;
+      }
+      .inspire-banner {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  
+  <!-- hero text section -->
+  <div class="hero">
+    <h1>✦ wander & wonder ✦</h1>
+    <p>pictures that speak, buttons that act — a tiny gallery of stories</p>
+  </div>
+
+  <!-- cards: each contains image, text (title/desc) and button(s) -->
+  <div class="cards-grid">
+    <!-- card 1 -->
+    <div class="card">
+      <img class="card-img" src="https://picsum.photos/id/104/400/260" alt="Peaceful lake landscape" loading="lazy">
+      <div class="card-content">
+        <div class="card-title">Serene Lake</div>
+        <div class="card-desc">Crystal reflections and gentle ripples. A moment of stillness in the mountains — breathe deep.</div>
+        <button class="btn btn-primary" data-message="You clicked 'Serene Lake' 🌊 — peace flows within.">🌿 explore calm</button>
+      </div>
+    </div>
+
+    <!-- card 2 -->
+    <div class="card">
+      <img class="card-img" src="https://picsum.photos/id/20/400/260" alt="Coffee and workspace" loading="lazy">
+      <div class="card-content">
+        <div class="card-title">Cozy Corner</div>
+        <div class="card-desc">Morning brew, soft light, creative chaos. Perfect spot for journaling or code.</div>
+        <button class="btn btn-outline" data-message="☕ Cozy Corner — take a slow sip & feel inspired.">✨ take a break</button>
+      </div>
+    </div>
+
+    <!-- card 3 -->
+    <div class="card">
+      <img class="card-img" src="https://picsum.photos/id/96/400/260" alt="Mountain hiking view" loading="lazy">
+      <div class="card-content">
+        <div class="card-title">Alpine Peaks</div>
+        <div class="card-desc">Where the air is crisp and the horizon endless. Adventure awaits every trail.</div>
+        <button class="btn btn-warning" data-message="🏔️ Alpine calling! Ready for an adventure?">🧗 start journey</button>
+      </div>
+    </div>
+
+    <!-- card 4: extra fun picture and two buttons? but keeping consistent style -->
+    <div class="card">
+      <img class="card-img" src="https://picsum.photos/id/169/400/260" alt="Sunset over ocean" loading="lazy">
+      <div class="card-content">
+        <div class="card-title">Golden Horizon</div>
+        <div class="card-desc">Sunset melts into the sea — a daily reminder that endings can be beautiful.</div>
+        <button class="btn btn-primary" data-message="🌅 Golden Hour — serenity now.">☀️ watch sunset</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- additional interactive row: multiple buttons + text and picture banner (more pictures & call to action) -->
+  <div class="inspire-banner">
+    <div class="banner-text">
+      <h4>🌱 little moments, big magic</h4>
+      <p>Click any button around the page to feel the vibe. Each one triggers a special message — like tiny affirmations from the digital world. Plus, enjoy the visuals that bring warmth and curiosity.</p>
+    </div>
+    <img class="banner-img" src="https://picsum.photos/id/26/150/150" alt="artistic nature path" loading="lazy">
+    <img class="banner-img" src="https://picsum.photos/id/29/150/150" alt="colorful architecture" loading="lazy">
+  </div>
+
+  <!-- demo button group: different styles, interactive texts -->
+  <div class="action-row">
+    <h3>⚡ control panel</h3>
+    <div class="button-group">
+      <button class="btn" id="greetBtn" data-message="👋 Hello! Thanks for visiting the gallery — enjoy your stay ✨">Say Hello</button>
+      <button class="btn btn-outline" id="surpriseBtn" data-message="🎉 Surprise! You have great taste in interactive design. Here's a virtual high-five 🙌">Surprise me</button>
+      <button class="btn btn-warning" id="resetMsgBtn" data-reset="true" style="background:#5c6f7e;">Clear message</button>
+      <button class="btn btn-primary" id="echoBtn" data-message="🔁 Echo: Buttons, pictures & text live in harmony — you clicked the core vibe.">Harmony check</button>
+    </div>
+    <!-- dynamic feedback area for button clicks -->
+    <div id="globalFeedback" class="toast-msg" style="background:#1f3e48; color:white; display:inline-block; margin-top: 1rem;">
+      💡 click any button → feel the interaction
+    </div>
+  </div>
+
+  <!-- extra text block: storytelling & info about pictures-->
+  <div style="background: #fff9f0; border-radius: 2rem; padding: 1.5rem 2rem; margin-top: 1rem; border: 1px solid #f0e5d2;">
+    <div style="display: flex; flex-wrap: wrap; gap: 1.2rem; align-items: center; justify-content: space-between;">
+      <div style="flex: 2;">
+        <h3 style="font-size: 1.4rem; font-weight: 600; color: #3a5c4f;">📸 all pictures tell a story</h3>
+        <p style="color:#2c4b5e; margin-top: 0.5rem;">Every image you see is a curated window — from serene lakes to alpine heights. Buttons allow you to engage, triggering small digital echoes. The design blends visual calm with playful interactions. Go ahead, click again and again!</p>
+        <p style="margin-top: 0.8rem; font-size: 0.9rem;">💎 Made with curiosity: buttons react, images inspire, and text grounds the experience.</p>
+      </div>
+      <div>
+        <!-- decorative picture inline -->
+        <img src="https://picsum.photos/id/155/120/120" alt="floating leaf" style="border-radius: 2rem; object-fit:cover; width:100px; height:100px; box-shadow:0 10px 15px -5px rgba(0,0,0,0.1);">
+      </div>
+    </div>
+  </div>
+  
+  <footer>
+    <p>✦ interactive gallery | Buttons, pictures & meaningful text ✦ <br>all images from <a href="https://picsum.photos/" target="_blank" style="color:#2c7a5e;">Lorem Picsum</a> — beautiful placeholder photography</p>
+  </footer>
+</div>
+
+<script>
+  // DOM Elements: core interactive feedback controller
+  (function() {
+    // get global feedback element
+    const feedbackDiv = document.getElementById('globalFeedback');
+    
+    // helper to update feedback message with smooth styling
+    function setFeedback(message, isError = false) {
+      if (!feedbackDiv) return;
+      feedbackDiv.textContent = message;
+      feedbackDiv.style.transition = 'background 0.2s';
+      feedbackDiv.style.background = isError ? '#b1624b' : '#1f4b5c';
+      feedbackDiv.style.color = 'white';
+      // optional reset after a while? Not needed but will keep new messages
+      setTimeout(() => {
+        if (feedbackDiv && feedbackDiv.textContent === message) {
+          // keep message but we can set a subtle fallback after 3 sec? better keep last message
+          // we don't want to lose user message, but reset to generic if user clears? They have clear button.
+        }
+      }, 3000);
+    }
+
+    // Function to handle any click on .btn elements that have data-message attribute (or special id buttons)
+    function handleButtonClick(event) {
+      const btn = event.currentTarget;
+      // check if btn has data-message or special reset flag
+      if (btn.dataset.reset === "true") {
+        setFeedback("✨ Message cleared. Ready for new inspiration!", false);
+        return;
+      }
+      
+      let message = btn.dataset.message;
+      if (message) {
+        setFeedback(message, false);
+      } else {
+        // fallback for any button without explicit message
+        setFeedback("🔘 you pressed a button — interaction captured!", false);
+      }
+      
+      // optional tiny ripple or haptic feedback (vibration if supported)
+      if (btn.style.transform === 'scale(0.98)') {
+        btn.style.transform = '';
+        setTimeout(() => { if(btn) btn.style.transform = ''; }, 100);
+      } else {
+        btn.style.transform = 'scale(0.98)';
+        setTimeout(() => { if(btn) btn.style.transform = ''; }, 120);
+      }
+    }
+
+    // select ALL buttons that have the class 'btn' — also inside cards and action row
+    const allButtons = document.querySelectorAll('.btn');
+    
+    // Attach event listeners
+    allButtons.forEach(button => {
+      // avoid duplicate listeners
+      button.removeEventListener('click', handleButtonClick);
+      button.addEventListener('click', handleButtonClick);
+    });
+
+    // specifically for the dynamic buttons that might be added? but all present on load.
+    // Also we want to catch the reset button and any data-message card buttons.
+    // Also, card buttons already have 'btn' class, so covered.
+    
+    // Additionally, we could add alternative styles for alert, but feedback is smooth.
+    // For extra: handle graceful keyboard / accessibility
+    const style = document.createElement('style');
+    style.textContent = `
+      .btn:focus-visible {
+        outline: 3px solid #2c7a5e;
+        outline-offset: 2px;
+      }
+      button {
+        cursor: pointer;
+      }
+    `;
+    document.head.appendChild(style);
+    
+    // Also ensure the images have alt text, which they already do. Provide extra tooltip for each button
+    // Add additional small note: show timestamp on demo click? not needed.
+    console.log("Ready: buttons, pictures, text — fully interactive");
+    
+    // enhance the "global feedback" with extra small animation on first load (playful)
+    setTimeout(() => {
+      if (feedbackDiv) {
+        feedbackDiv.style.transition = 'all 0.2s';
+        feedbackDiv.style.opacity = '0.95';
+      }
+    }, 100);
+    
+    // Add hover help to all buttons? optional but not needed.
+    // Include a fallback for dynamically created elements (none, but we cover everything)
+    
+    // For the "Clear message" button we added a dataset.reset, but also make sure it still shows clear msg
+    // Already working because handleButtonClick checks dataset.reset.
+    // All good, let's also add a dynamic listener for any future clicks in case? all pre-existing.
+    // Double-check that no button left without listener: 
+    const additionalButtons = document.querySelectorAll('.button-group .btn, .card .btn');
+    if (additionalButtons.length === allButtons.length) {
+      // complete coverage
+    }
+    
+    // Add interactive hover effect over images? optional but adds charm? not needed for core spec.
+    // But for delight: add a simple zoom effect on image hover gentle
+    const allImgs = document.querySelectorAll('.card-img');
+    allImgs.forEach(img => {
+      img.addEventListener('mouseenter', () => {
+        img.style.transition = 'transform 0.3s ease, filter 0.2s';
+        img.style.transform = 'scale(1.02)';
+      });
+      img.addEventListener('mouseleave', () => {
+        img.style.transform = 'scale(1)';
+      });
+    });
+    
+    // info: pictures will also have slight nice border radius transition
+    const bannerImgs = document.querySelectorAll('.banner-img, .inspire-banner img');
+    bannerImgs.forEach(img => {
+      img.style.transition = 'transform 0.2s';
+      img.addEventListener('mouseenter', () => img.style.transform = 'rotate(2deg) scale(1.03)');
+      img.addEventListener('mouseleave', () => img.style.transform = 'rotate(0deg) scale(1)');
+    });
+    
+    // small customizable add: when you click on card title? not needed but fun fact : card titles are text
+    // Adding extra message for picture delight: if any image clicked gives fact but would be extra; not needed but engaging:
+    const descriptiveText = () => {
+      // Just for fun: allow clicking images to show image caption feedback (optional consistent with buttons)
+      const allCardImages = document.querySelectorAll('.card-img');
+      allCardImages.forEach((img, idx) => {
+        img.style.cursor = 'pointer';
+        img.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const parentCard = img.closest('.card');
+          if (parentCard) {
+            const titleEl = parentCard.querySelector('.card-title');
+            const titleText = titleEl ? titleEl.innerText : 'this picture';
+            setFeedback(`🖼️ You tapped the image of ${titleText} — look at those details!`, false);
+          } else {
+            setFeedback(`📸 image focus: visual inspiration flows`, false);
+          }
+        });
+      });
+    };
+    descriptiveText();
+  })();
+</script>
+</body>
 </html>
