@@ -9,6 +9,17 @@ body {
 }
 p {
   color: #3BB8DB;
+  background-color: #0D542B;
+  border-size: 10px;
+  border-color: #3C6301;
+  border-radius: 10px;
+}
+h1{
+  color: #3BB8DB;
+  background-color: #0D542B;
+  border-size: 10px;
+  border-color: #3C6301;
+  border-radius: 10px;
 }
 
 
