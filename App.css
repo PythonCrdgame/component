@@ -1,0 +1,15 @@
+div{
+  background-color:cornflowerblue;
+
+}
+button{
+  background-color: aquamarine;
+  color:crimson;
+  align-items: center;
+  justify-content:center;
+  aspect-ratio: inherit;
+}
+body{
+  background-color: rgb(143, 171, 209);
+  justify-content:center;
+}
